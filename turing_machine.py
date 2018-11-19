@@ -45,7 +45,7 @@ class MT(object):
         return self.current_tape[:self.head_position] + self.actual_state + self.current_tape[self.head_position:]
 
     def move_right(self, write_symbol, next_state):
-        copy_current_tape = [self.current_tape]
+        copy_current_tape = list(self.current_tape)
         copy_current_tape[self.head_position] = write_symbol
         self.head_position += 1
         if(self.head_position >= len(self.current_tape)):
@@ -55,7 +55,7 @@ class MT(object):
         self.current_tape = "".join(copy_current_tape)
 
     def move_left(self, write_symbol, next_state):
-        copy_current_tape = [self.current_tape]
+        copy_current_tape = list(self.current_tape)
         copy_current_tape[self.head_position] = write_symbol
         self.head_position -= 1
         if(self.head_position >= len(self.current_tape)):
@@ -71,23 +71,36 @@ class MT(object):
         # Conferir transações e estados
 
         for transaction in self.transactions:
+
+            # transaction_ended = False
             read_state = '{' + transaction[1:3]  + '}'
-            print(read_state)
+            # print(read_state)
             read_symbol = transaction[4]
-            print(read_symbol)
+            # print(read_symbol)
             next_symbol = transaction[-4]
-            print(next_symbol)
+            # print(next_symbol)
             next_state = '{' + transaction[9:11] + '}'
-            print(next_state)
+            # print(next_state)
             direction = transaction[-2]
-            print(direction)
-            print("olarrr "  + str(self.head_position))
-            if(self.actual_state == read_state and self.current_tape[self.head_position] == read_symbol):
-                
-                if(direction == 'R'):
-                    self.move_right(next_symbol, next_state)
+            # print(direction)
+            # print("olarrr "  + str(self.head_position))
+            while(True):
+                if(self.actual_state == read_state and self.current_tape[self.head_position] == read_symbol):
                     
-                elif(direction == 'L'):
-                    self.move_left(next_symbol, next_state)
+                    if(direction == 'R'):
+                        self.move_right(next_symbol, next_state)
+                        
+                    elif(direction == 'L'):
+                        self.move_left(next_symbol, next_state)
+                    
+                    print("New tape configuration: " + str(self))
+                else:
+                    break
+            # else:
+            #     errorMsg = "Invalid transaction!"
+            #     if(self.actual_state != read_state):
+            #         errorMsg += " actual state does not match transaction's readed state"
+            #     elif(self.current_tape[self.head_position] != read_symbol):
+            #         errorMsg += " actual tape symbol does not match transaction's readed symbol"
                 
-                print(self)
+            #     raise ValueError(errorMsg)
