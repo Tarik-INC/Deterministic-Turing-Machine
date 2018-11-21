@@ -2,6 +2,17 @@
 
 
 class MT(object):
+    """Classe MT que implementa uma máquina de turing através de propriedades e metódos definidos abaixo
+    
+    Args:
+        object (object): O tipo de um objeto mais básico em python, utilizado para haja sobrecarga 
+        do método __str__ 
+    
+    Raises:
+        ValueError: Posição da cabeça de leitura viola o limite esquerdo da máquina de turing
+        ValueError: Posição da cabeça de leitura viola o limite direito imposto pelo inpout lido do arquivo
+    
+    """
 
     @staticmethod
     def build_from_file(fileName):
@@ -49,7 +60,7 @@ class MT(object):
         copy_current_tape[self.head_position] = write_symbol
         self.head_position += 1
         if(self.head_position >= len(self.current_tape)):
-            raise ValueError('Head posotion violates limits to the right')
+            raise ValueError('Head position violates limits to the right')
 
         self.actual_state = next_state
         self.current_tape = "".join(copy_current_tape)
@@ -59,10 +70,23 @@ class MT(object):
         copy_current_tape[self.head_position] = write_symbol
         self.head_position -= 1
         if(self.head_position >= len(self.current_tape)):
-            raise ValueError('Head posotion violates limits to the left')
+            raise ValueError('Head position violates limits to the left')
 
         self.actual_state = next_state
         self.current_tape = "".join(copy_current_tape)
+
+    def check_state(self, state):
+        if(not(state in self.states)):
+            raise ValueError("State given does not equal any state of the turing machine")
+    
+    def check_symbol_input(self, input_symbol):
+        if(not(input_symbol in self.input_alph)):
+            raise ValueError("Input symbol given doesn't appear in turing machine's input alphabet")
+
+    def check_symbol_tape(self, tape_symbol):
+        if(not(tape_symbol in self.tape_alph)):
+            raise ValueError("Tape symbol given doesn't appear in turing machine's tape alphabet")
+
 
     def start_computation(self):
 
@@ -74,12 +98,16 @@ class MT(object):
 
             # transaction_ended = False
             read_state = '{' + transaction[1:3]  + '}'
+            self.check_state(read_state)
             # print(read_state)
             read_symbol = transaction[4]
+            self.check_symbol_tape(read_symbol)
             # print(read_symbol)
             next_symbol = transaction[-4]
+            self.check_symbol_tape(next_symbol)
             # print(next_symbol)
             next_state = '{' + transaction[9:11] + '}'
+            self.check_state(next_state)
             # print(next_state)
             direction = transaction[-2]
             # print(direction)
