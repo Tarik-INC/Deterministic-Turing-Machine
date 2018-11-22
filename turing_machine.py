@@ -51,7 +51,6 @@ class MT(object):
             elif (item.startswith('(') and len(item) > 1):
                 transactions.append(item)
 
-      
         return MT(states=separated_content[0], input_alph=separated_content[1], tape_alph=separated_content[2], initial_state=separated_content[3], transactions=transactions, mt_input=mt_input)
 
     def __init__(self, states, input_alph, tape_alph, initial_state, transactions, mt_input):
