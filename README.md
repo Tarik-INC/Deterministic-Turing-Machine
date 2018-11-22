@@ -12,7 +12,7 @@ To execute the program, go to the same directory as main.py and type in terminal
 ```
 python main.py {fileName}.txt
 ```
-#### Components
+### Components
 
 * Main: main component responsible for reading the file and execute the program
 
