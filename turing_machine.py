@@ -51,9 +51,7 @@ class MT(object):
             elif (item.startswith('(') and len(item) > 1):
                 transactions.append(item)
 
-        print(separated_content)
-        print(transactions)
-
+      
         return MT(states=separated_content[0], input_alph=separated_content[1], tape_alph=separated_content[2], initial_state=separated_content[3], transactions=transactions, mt_input=mt_input)
 
     def __init__(self, states, input_alph, tape_alph, initial_state, transactions, mt_input):
@@ -130,12 +128,11 @@ class MT(object):
          de movimentação, direta ou esquerda, dependendo da direção especificada na transição, com o final da 
          computação printando a configuração resultante da fita
         """
-        print(self)
+    
         TransactionVerificator.check_initial_state_first_transaction(self.actual_state, self.transactions[0])
 
         for transaction in self.transactions:
 
-            print(self.states + " teste")
             read_state =  transaction [1:3] 
             TransactionVerificator.check_state(self, read_state) 
             read_state = '{' + read_state + '}'
