@@ -30,17 +30,17 @@ class MT(object):
             MT: Um objeto MT instanciado com as informações obtidas na leitura do arquivo
         """
 
-        try:
-            file_read = open(fileName, 'r', encoding='utf8')
-        except FileNotFoundError as FNFE:
-            print(FNFE)
+        # try:
+        #     file_read = open(fileName, 'r', encoding='utf8')
+        # except FileNotFoundError as FNFE:
+        #     print(FNFE)
 
         content = []
         separated_content = []
         transactions = []
         mt_input = ""
         # index = 0
-        for line in file_read.readlines():
+        for line in fileName:
             content.append(line.strip("\n\t" + ", "))
 
         mt_input = content.pop()
